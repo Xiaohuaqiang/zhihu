@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "MainViewController.h"
+#import "MyViewController.h"
+#import "MessageViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -21,13 +24,41 @@
     
     
     
-    ViewController *viewController = [[ViewController alloc]init];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if([userDefault objectForKey:@"username"]){
+        
+        UITabBarController *tabbarcontroller = [[UITabBarController alloc]init];
+        MainViewController *mainController = [[MainViewController alloc]init];
+        MyViewController *myController = [[MyViewController alloc]init];
+        MessageViewController *messageController = [[MessageViewController alloc]init];
+        
+        mainController.tabBarItem.title = @"首页";
+        messageController.tabBarItem.title = @"消息";
+        myController.tabBarItem.title = @"我的";
+        
+        
+        
+        
+        [tabbarcontroller setViewControllers:@[mainController,messageController,myController]];
+        //[self.navigationController presentViewController:tabbarcontroller animated:YES completion:nil];
+        //tabbarcontroller.title=@"g标题";
+//        UIBarButtonItem *leftbtn = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStyleDone target:self action:@selector(pressLeftbtn)];
+//        tabbarcontroller.navigationItem.leftBarButtonItem = leftbtn;
+//
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:tabbarcontroller];
+        //设置根控制器
+        self.window.rootViewController = nav;
+    }else{
+        //跳转到登录界面
+        ViewController * loginController = [[ViewController alloc]init];
+        loginController.view.backgroundColor = [UIColor whiteColor];
+        self.window.rootViewController = loginController;
+    }
     
    
     
     
-    UINavigationController *navigationcontroller =[[UINavigationController alloc]initWithRootViewController:viewController];
-    self.window.rootViewController = navigationcontroller;
+    
     [self.window makeKeyAndVisible];
     return YES;
 

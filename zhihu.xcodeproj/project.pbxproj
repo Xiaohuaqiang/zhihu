@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B11E51E25A1A8D700BD4B2D /* AnswerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B11E51D25A1A8D700BD4B2D /* AnswerListCell.m */; };
+		2B410D04259CAC26000AEE78 /* HTTPConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B410D03259CAC26000AEE78 /* HTTPConnect.m */; };
+		2B560F1E2594A3C20020CB79 /* GTNormalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B560F1D2594A3C20020CB79 /* GTNormalTableViewCell.m */; };
+		2B560F212594B0C50020CB79 /* QuestionListIterm.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B560F202594B0C50020CB79 /* QuestionListIterm.m */; };
+		2B560F272594B79B0020CB79 /* ListLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B560F262594B79B0020CB79 /* ListLoader.m */; };
 		2BC0F4B725809338003900CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0F4B625809338003900CD /* AppDelegate.m */; };
 		2BC0F4BA25809338003900CD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0F4B925809338003900CD /* ViewController.m */; };
 		2BC0F4BD25809338003900CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BC0F4BB25809338003900CD /* Main.storyboard */; };
@@ -18,13 +23,26 @@
 		2BC0F4D52580BC24003900CD /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0F4D42580BC24003900CD /* MainViewController.m */; };
 		2BC0F4D82580C362003900CD /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0F4D72580C362003900CD /* MyViewController.m */; };
 		2BC0F4DB2580CA64003900CD /* QuestionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0F4DA2580CA64003900CD /* QuestionDetailViewController.m */; };
-		2BC0F4DE2580CCBF003900CD /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0F4DD2580CCBF003900CD /* QuestionTableViewCell.m */; };
 		2BC0F4E12580E9F7003900CD /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0F4E02580E9F7003900CD /* MessageViewController.m */; };
 		2BC0F4EA258101FD003900CD /* TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0F4E9258101FD003900CD /* TopViewController.m */; };
 		2BC0F4ED25810B9A003900CD /* AddQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0F4EC25810B9A003900CD /* AddQuestionViewController.m */; };
+		2BD416EE259DC9110019FC4F /* AnswerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD416ED259DC9110019FC4F /* AnswerListViewController.m */; };
+		2BD416F1259DC96F0019FC4F /* WriteAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD416F0259DC96F0019FC4F /* WriteAnswerViewController.m */; };
+		2BDBD0C125A1F83300463164 /* ClearAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDBD0C025A1F83300463164 /* ClearAnswerViewController.m */; };
+		2BDBD0C425A311A800463164 /* ModifyAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDBD0C325A311A700463164 /* ModifyAnswerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B11E51C25A1A8D700BD4B2D /* AnswerListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnswerListCell.h; sourceTree = "<group>"; };
+		2B11E51D25A1A8D700BD4B2D /* AnswerListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnswerListCell.m; sourceTree = "<group>"; };
+		2B410D02259CAC26000AEE78 /* HTTPConnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPConnect.h; sourceTree = "<group>"; };
+		2B410D03259CAC26000AEE78 /* HTTPConnect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPConnect.m; sourceTree = "<group>"; };
+		2B560F1C2594A3C20020CB79 /* GTNormalTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTNormalTableViewCell.h; sourceTree = "<group>"; };
+		2B560F1D2594A3C20020CB79 /* GTNormalTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTNormalTableViewCell.m; sourceTree = "<group>"; };
+		2B560F1F2594B0C50020CB79 /* QuestionListIterm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionListIterm.h; sourceTree = "<group>"; };
+		2B560F202594B0C50020CB79 /* QuestionListIterm.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionListIterm.m; sourceTree = "<group>"; };
+		2B560F252594B79B0020CB79 /* ListLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListLoader.h; sourceTree = "<group>"; };
+		2B560F262594B79B0020CB79 /* ListLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListLoader.m; sourceTree = "<group>"; };
 		2BC0F4B225809338003900CD /* zhihu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zhihu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BC0F4B525809338003900CD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2BC0F4B625809338003900CD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -44,14 +62,20 @@
 		2BC0F4D72580C362003900CD /* MyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
 		2BC0F4D92580CA64003900CD /* QuestionDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionDetailViewController.h; sourceTree = "<group>"; };
 		2BC0F4DA2580CA64003900CD /* QuestionDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionDetailViewController.m; sourceTree = "<group>"; };
-		2BC0F4DC2580CCBF003900CD /* QuestionTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionTableViewCell.h; sourceTree = "<group>"; };
-		2BC0F4DD2580CCBF003900CD /* QuestionTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewCell.m; sourceTree = "<group>"; };
 		2BC0F4DF2580E9F7003900CD /* MessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		2BC0F4E02580E9F7003900CD /* MessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		2BC0F4E8258101FD003900CD /* TopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopViewController.h; sourceTree = "<group>"; };
 		2BC0F4E9258101FD003900CD /* TopViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopViewController.m; sourceTree = "<group>"; };
 		2BC0F4EB25810B9A003900CD /* AddQuestionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddQuestionViewController.h; sourceTree = "<group>"; };
 		2BC0F4EC25810B9A003900CD /* AddQuestionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddQuestionViewController.m; sourceTree = "<group>"; };
+		2BD416EC259DC9110019FC4F /* AnswerListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnswerListViewController.h; sourceTree = "<group>"; };
+		2BD416ED259DC9110019FC4F /* AnswerListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnswerListViewController.m; sourceTree = "<group>"; };
+		2BD416EF259DC96F0019FC4F /* WriteAnswerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WriteAnswerViewController.h; sourceTree = "<group>"; };
+		2BD416F0259DC96F0019FC4F /* WriteAnswerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WriteAnswerViewController.m; sourceTree = "<group>"; };
+		2BDBD0BF25A1F83300463164 /* ClearAnswerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClearAnswerViewController.h; sourceTree = "<group>"; };
+		2BDBD0C025A1F83300463164 /* ClearAnswerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClearAnswerViewController.m; sourceTree = "<group>"; };
+		2BDBD0C225A311A700463164 /* ModifyAnswerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifyAnswerViewController.h; sourceTree = "<group>"; };
+		2BDBD0C325A311A700463164 /* ModifyAnswerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifyAnswerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +89,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B410CFC259CA59A000AEE78 /* http */ = {
+			isa = PBXGroup;
+			children = (
+				2B410D02259CAC26000AEE78 /* HTTPConnect.h */,
+				2B410D03259CAC26000AEE78 /* HTTPConnect.m */,
+			);
+			path = http;
+			sourceTree = "<group>";
+		};
+		2B560F222594B0D70020CB79 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				2B560F1C2594A3C20020CB79 /* GTNormalTableViewCell.h */,
+				2B560F1D2594A3C20020CB79 /* GTNormalTableViewCell.m */,
+				2B11E51C25A1A8D700BD4B2D /* AnswerListCell.h */,
+				2B11E51D25A1A8D700BD4B2D /* AnswerListCell.m */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
+		2B560F232594B0FC0020CB79 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2B560F1F2594B0C50020CB79 /* QuestionListIterm.h */,
+				2B560F202594B0C50020CB79 /* QuestionListIterm.m */,
+				2B560F252594B79B0020CB79 /* ListLoader.h */,
+				2B560F262594B79B0020CB79 /* ListLoader.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		2BC0F4A925809338003900CD = {
 			isa = PBXGroup;
 			children = (
+				2B410CFC259CA59A000AEE78 /* http */,
+				2B560F232594B0FC0020CB79 /* Model */,
+				2B560F222594B0D70020CB79 /* cell */,
 				2BC0F4B425809338003900CD /* zhihu */,
 				2BC0F4B325809338003900CD /* Products */,
 			);
@@ -96,20 +154,26 @@
 				2BC0F4C425809339003900CD /* main.m */,
 				2BC0F4CB2580937A003900CD /* RegisterViewController.h */,
 				2BC0F4CC2580937A003900CD /* RegisterViewController.m */,
+				2BC0F4DF2580E9F7003900CD /* MessageViewController.h */,
 				2BC0F4D32580BC24003900CD /* MainViewController.h */,
 				2BC0F4D42580BC24003900CD /* MainViewController.m */,
 				2BC0F4D62580C362003900CD /* MyViewController.h */,
 				2BC0F4D72580C362003900CD /* MyViewController.m */,
 				2BC0F4D92580CA64003900CD /* QuestionDetailViewController.h */,
 				2BC0F4DA2580CA64003900CD /* QuestionDetailViewController.m */,
-				2BC0F4DC2580CCBF003900CD /* QuestionTableViewCell.h */,
-				2BC0F4DD2580CCBF003900CD /* QuestionTableViewCell.m */,
-				2BC0F4DF2580E9F7003900CD /* MessageViewController.h */,
 				2BC0F4E02580E9F7003900CD /* MessageViewController.m */,
 				2BC0F4E8258101FD003900CD /* TopViewController.h */,
 				2BC0F4E9258101FD003900CD /* TopViewController.m */,
 				2BC0F4EB25810B9A003900CD /* AddQuestionViewController.h */,
 				2BC0F4EC25810B9A003900CD /* AddQuestionViewController.m */,
+				2BD416EC259DC9110019FC4F /* AnswerListViewController.h */,
+				2BD416ED259DC9110019FC4F /* AnswerListViewController.m */,
+				2BD416EF259DC96F0019FC4F /* WriteAnswerViewController.h */,
+				2BD416F0259DC96F0019FC4F /* WriteAnswerViewController.m */,
+				2BDBD0BF25A1F83300463164 /* ClearAnswerViewController.h */,
+				2BDBD0C025A1F83300463164 /* ClearAnswerViewController.m */,
+				2BDBD0C225A311A700463164 /* ModifyAnswerViewController.h */,
+				2BDBD0C325A311A700463164 /* ModifyAnswerViewController.m */,
 			);
 			path = zhihu;
 			sourceTree = "<group>";
@@ -185,15 +249,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B11E51E25A1A8D700BD4B2D /* AnswerListCell.m in Sources */,
+				2BDBD0C425A311A800463164 /* ModifyAnswerViewController.m in Sources */,
+				2BD416EE259DC9110019FC4F /* AnswerListViewController.m in Sources */,
 				2BC0F4EA258101FD003900CD /* TopViewController.m in Sources */,
 				2BC0F4D82580C362003900CD /* MyViewController.m in Sources */,
 				2BC0F4BA25809338003900CD /* ViewController.m in Sources */,
 				2BC0F4C525809339003900CD /* main.m in Sources */,
 				2BC0F4B725809338003900CD /* AppDelegate.m in Sources */,
 				2BC0F4D52580BC24003900CD /* MainViewController.m in Sources */,
-				2BC0F4DE2580CCBF003900CD /* QuestionTableViewCell.m in Sources */,
+				2B560F272594B79B0020CB79 /* ListLoader.m in Sources */,
+				2BD416F1259DC96F0019FC4F /* WriteAnswerViewController.m in Sources */,
 				2BC0F4ED25810B9A003900CD /* AddQuestionViewController.m in Sources */,
 				2BC0F4E12580E9F7003900CD /* MessageViewController.m in Sources */,
+				2B560F1E2594A3C20020CB79 /* GTNormalTableViewCell.m in Sources */,
+				2B410D04259CAC26000AEE78 /* HTTPConnect.m in Sources */,
+				2BDBD0C125A1F83300463164 /* ClearAnswerViewController.m in Sources */,
+				2B560F212594B0C50020CB79 /* QuestionListIterm.m in Sources */,
 				2BC0F4DB2580CA64003900CD /* QuestionDetailViewController.m in Sources */,
 				2BC0F4CD2580937A003900CD /* RegisterViewController.m in Sources */,
 			);

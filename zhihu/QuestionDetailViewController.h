@@ -11,7 +11,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QuestionDetailViewController : UIViewController
-
+@property(nonatomic,strong,readwrite) NSString *questionID;
+@property(nonatomic,strong,readwrite) NSString *answerID;
+@property(nonatomic,strong,readwrite) NSString *answerContent;
+@property(nonatomic,strong,readwrite) NSString *questionTitle;
+@property(nonatomic,strong,readwrite) NSString *nickname;
 @end
 
 NS_ASSUME_NONNULL_END

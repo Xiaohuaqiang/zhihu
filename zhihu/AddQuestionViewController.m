@@ -20,7 +20,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //[self.navigationItem.backBarButtonItem setTitle:@"返回"];
+    UIBarButtonItem *backIetm = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(pressBack)];
+  
     
+    self.navigationItem.leftBarButtonItem = backIetm;
+
     self.view.backgroundColor = [UIColor whiteColor];
     //  初始化上述声明的UITextView文本域
     textView = [[UITextView alloc] initWithFrame:CGRectMake(0,100,self.view.bounds.size.width,100)];
@@ -67,17 +72,18 @@
     
     //设置发布按钮
     
-    UIButton* btn = [[UIButton alloc]init];
-    btn.frame = CGRectMake(self.view.bounds.size.width-100, 50, 100, 50);
+    UIBarItem* btn = [[UIBarButtonItem alloc]initWithTitle:@"发布" style:UIBarButtonItemStyleDone target:self action:@selector(addQuestion)];
+   
     //btn.backgroundColor = [UIColor cyanColor];
     //    btn.layer.masksToBounds = YES;
     //    btn.layer.cornerRadius = 10;
     //btn.backgroundColor = [UIColor grayColor];
-    [btn setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
-    [btn setTitle:@"发布" forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
-    //
-    [self.view addSubview:btn];
+//    [btn setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
+//    [btn setTitle:@"发布" forState:UIControlStateNormal];
+//    [btn addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
+//    //
+    self.navigationItem.rightBarButtonItem = btn;
+   // [self.view addSubview:btn];
     self.view.backgroundColor = [UIColor whiteColor];
     
     // 添加到当前view
@@ -87,7 +93,9 @@
     
 }
 
-
+-(void)pressBack{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 //当触碰到非文本域的空白处，关闭键盘
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)UIEvent{
     [textView resignFirstResponder];
@@ -95,8 +103,8 @@
 -(void)addQuestion{
     
     //token string header  是用户令牌   title string POST请求体是标题  content string POST请求体是详细描述
-    AppDelegate *app =(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSLog(app.token);
+    NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
+    NSString *token = [userdefault objectForKey:@"token"];
     //1.确定请求路径
     NSURL *url = [NSURL URLWithString:@"http://47.102.194.254:8000/api/v1/questions"];
     
@@ -112,7 +120,7 @@
     //设置请求头User-Agent
     //注意:key一定要一致(用于传递数据给后台)
     [request setValue:@"ios 10.1" forHTTPHeaderField:@"User-Agent"];
-    [request setValue:app.token forHTTPHeaderField:@"token"];
+    [request setValue:token forHTTPHeaderField:@"token"];
     
     //4.设置请求体信息,字符串--->NSData
     NSString *strBody=  [ NSString stringWithFormat:@"title=%@&content=%@&type=json",textView.text,detailTextView.text];
@@ -153,6 +161,7 @@
             //弹出发布问题成功
             [alertController addAction:action];
             [self presentViewController:alertController animated:YES completion:nil];
+            //返回上一个页面
             
         }
         

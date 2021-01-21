@@ -20,9 +20,17 @@
 @implementation RegisterViewController
 
 - (void)viewDidLoad {
+    //修改系统自带的返回键为中文d返回
+    UIButton *backbutton = [[UIButton alloc ]init];
+    [backbutton setFrame:CGRectMake(10, 35, 50, 40)];
+    [backbutton setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
+    [backbutton setTitle:@"返回" forState:UIControlStateNormal];
+    
+    [backbutton addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backbutton];
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    loginText = [[UITextField alloc] initWithFrame:CGRectMake(20, 80, SCREEN_SIZE.width-40, 40)];
+    loginText = [[UITextField alloc] initWithFrame:CGRectMake(20, SCREEN_SIZE.height/5, SCREEN_SIZE.width-40, 50)];
     loginText.borderStyle = UITextBorderStyleRoundedRect;
     loginText.placeholder = @"请输入用户名";
     
@@ -34,7 +42,7 @@
     [self.view addSubview:loginText];
     
     
-    passwdText = [[UITextField alloc]initWithFrame:CGRectMake(20, 130, SCREEN_SIZE.width-40, 40)];
+    passwdText = [[UITextField alloc]initWithFrame:CGRectMake(20, SCREEN_SIZE.height/5+70, SCREEN_SIZE.width-40, 50)];
     passwdText.borderStyle = UITextBorderStyleRoundedRect;
     passwdText.placeholder = @"请输入密码";
     passwdText.secureTextEntry = YES;
@@ -45,7 +53,7 @@
     passwdText.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:passwdText];
     
-    rePasswdText = [[UITextField alloc]initWithFrame:CGRectMake(20, 180, SCREEN_SIZE.width-40, 40)];
+    rePasswdText = [[UITextField alloc]initWithFrame:CGRectMake(20, SCREEN_SIZE.height/5+140, SCREEN_SIZE.width-40, 50)];
     rePasswdText.borderStyle = UITextBorderStyleRoundedRect;
     rePasswdText.placeholder = @"请输入确认密码";
     rePasswdText.secureTextEntry = YES;
@@ -61,7 +69,7 @@
     
     //注册按钮
     UIButton *registerBtn =[UIButton buttonWithType:UIButtonTypeSystem];
-    registerBtn.frame = CGRectMake(SCREEN_SIZE.width/4*3-50, 230, 100, 30);
+    registerBtn.frame = CGRectMake(SCREEN_SIZE.width/4*3-50, SCREEN_SIZE.height/5+220, 100, 40);
     [registerBtn setTitle:@"确认注册" forState:UIControlStateNormal];
     registerBtn.layer.masksToBounds = YES;
     registerBtn.layer.cornerRadius = 10;
@@ -84,6 +92,17 @@
 //    [btn setTitle:@"返回" forState:UIControlStateNormal];
 //    [btn addTarget:self action:@selector(backPress) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:btn];
+}
+
+//点击空白处收起键盘
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [loginText resignFirstResponder];
+    [passwdText resignFirstResponder];
+    [rePasswdText resignFirstResponder];
+}
+//返回上一级页面
+-(void)backClick{
+ [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 //注册前，先做校验
