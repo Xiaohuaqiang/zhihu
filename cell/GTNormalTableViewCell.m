@@ -36,21 +36,22 @@
             self.titleLabel;
         })];
         [self.contentView addSubview:({
-            self.nickNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 50, 50, 40)];
-            //self.nickNameLabel.backgroundColor = [UIColor redColor];
+            self.nickNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 45, 50, 20)];
+           // self.nickNameLabel.backgroundColor = [UIColor redColor];
             self.nickNameLabel.font = [UIFont systemFontOfSize:12];
+            self.nickNameLabel.textAlignment = NSTextAlignmentCenter;
             self.nickNameLabel.textColor = [UIColor grayColor];
             self.nickNameLabel;
         })];
         [self.contentView addSubview:({
-            self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 50, 50, 40)];
+            self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 45, 50, 20)];
             //self.descriptionLabel.backgroundColor = [UIColor redColor];
             self.descriptionLabel.font = [UIFont systemFontOfSize:12];
             self.descriptionLabel.textColor = [UIColor grayColor];
             self.descriptionLabel;
         })];
         [self.contentView addSubview:({
-            self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 90, 380, 60)];
+            self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 70, 380, 50)];
             // self.contentLabel.backgroundColor = [UIColor redColor];
             self.contentLabel.font = [UIFont systemFontOfSize:12];
             self.contentLabel.numberOfLines=2;
@@ -59,7 +60,7 @@
             self.contentLabel;
         })];
         [self.contentView addSubview:({
-            self.picitureview = [[UIImageView alloc] initWithFrame:CGRectMake(20, 50, 50, 40)];
+            self.picitureview = [[UIImageView alloc] initWithFrame:CGRectMake(20, 45, 20, 20)];
             //self.picitureLabel.backgroundColor = [UIColor redColor];
            
             
@@ -88,12 +89,13 @@
 - (void)layoutTableViewCellWithItem:(QuestionListIterm *)item{
    NSString *strtitle =  [item.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     self.titleLabel.text = strtitle;
-    if (item.content.length==0 ) {
+    if (!item.content ) {
         self.contentLabel.text=@"暂无回答";
+        return;
     }else{
         self.contentLabel.text = item.content;
     }
-    if(item.avatar.length==0){
+    if(!item.avatar){
        // UIImage *image  = [UIImage imageNamed:@"图片/personalicon_tab.png"];
        //self.picitureview.image =image ;
     }else{
@@ -108,23 +110,28 @@
         dispatch_queue_main_t mainQueue = dispatch_get_main_queue();
         dispatch_async(doloadQueue, ^{
             UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.avatar]]];
+            CGSize size = CGSizeMake(20, 20);
+            UIImage *scaleimage = [ self newImage:image scaleToSize:size];
             dispatch_async(mainQueue, ^{
-                self.picitureview.image = image;
+                
+                self.picitureview.image = scaleimage;
             });
         });
         
     }
-    if (item.descriptions.length==0) {
-        //self.descriptionLabel.text=@"个人描述";
+    if (!item.descriptions) {
+        self.descriptionLabel.text=@"学生";
     }else{
         self.descriptionLabel.text=item.descriptions;
+         //self.descriptionLabel.text=@"学生";
     }
 
     //self.descriptionLabel.text = item.descriptions;
    
-    if (item.nickName.length==0) {
+    if (!item.nickName  ) {
        // self.nickNameLabel.text = @"昵称";
     }else{
+        NSLog(@"%@",item.nickName);
         self.nickNameLabel.text = item.nickName;}
     
   
@@ -137,4 +144,20 @@
         [self.delegate tableViewCell:self clickDeleteButton:self.deleteButton];
     }
 }
+// 图片缩放(不改变像素)
+-(UIImage *)newImage:(UIImage *)image scaleToSize:(CGSize)size
+
+{
+    
+    
+    
+    UIGraphicsBeginImageContext(size);
+    
+    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+      UIGraphicsEndImageContext();
+     return scaledImage;
+}
+
 @end

@@ -10,7 +10,7 @@
 #import "QuestionListIterm.h"
 @implementation ListLoader
 - (void)loadListDataWithFinishBlock:(GTListLoaderFinishBlock)finishBlock{
-    NSString *urlString = @"http://47.102.194.254/api/v1/questions?limit=20&offset=0";
+    NSString *urlString = @"http://47.102.194.254/api/v1/questions?limit=10&offset=0";
     NSURL *listURL = [NSURL URLWithString:urlString];
     
     //NSURLRequest *listRequest =  [NSURLRequest requestWithURL:listURL];
@@ -20,12 +20,13 @@
         NSError *jsonError;
         id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
 #warning 类型的检查
-        NSArray *dataArray = [((NSDictionary *)[((NSDictionary *)jsonObj) objectForKey:@"data"]) objectForKey:@"questions"];
+        NSMutableArray *dataArray = [((NSDictionary *)[((NSDictionary *)jsonObj) objectForKey:@"data"]) objectForKey:@"questions"];
        
         
         NSMutableArray *listItemArray = @[].mutableCopy;
         NSInteger i = 0;
         
+
         for (NSDictionary *info in dataArray) {
             NSString *title = [dataArray[i] objectForKey:@"title"];
             NSString *questionID = [dataArray[i] objectForKey:@"id"];

@@ -17,51 +17,35 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-    
-    
-    
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     if([userDefault objectForKey:@"username"]){
-        
-        UITabBarController *tabbarcontroller = [[UITabBarController alloc]init];
-        MainViewController *mainController = [[MainViewController alloc]init];
-        MyViewController *myController = [[MyViewController alloc]init];
-        MessageViewController *messageController = [[MessageViewController alloc]init];
-        
-        mainController.tabBarItem.title = @"首页";
-        messageController.tabBarItem.title = @"消息";
-        myController.tabBarItem.title = @"我的";
-        
-        
-        
-        
-        [tabbarcontroller setViewControllers:@[mainController,messageController,myController]];
-        //[self.navigationController presentViewController:tabbarcontroller animated:YES completion:nil];
-        //tabbarcontroller.title=@"g标题";
-//        UIBarButtonItem *leftbtn = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStyleDone target:self action:@selector(pressLeftbtn)];
-//        tabbarcontroller.navigationItem.leftBarButtonItem = leftbtn;
-//
-        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:tabbarcontroller];
-        //设置根控制器
-        self.window.rootViewController = nav;
-    }else{
+        UITabBarController *tabbarController = [[UITabBarController alloc]init];
+        UINavigationController *mainNav = [self navWithRootVC:[MainViewController new]];
+        mainNav.tabBarItem.title = @"首页";
+        UINavigationController *msgNav = [self navWithRootVC:[MessageViewController new]];
+        msgNav.tabBarItem.title = @"消息";
+        UINavigationController *myNav = [self navWithRootVC:[MyViewController new]];
+        myNav.tabBarItem.title = @"我的";
+        [tabbarController setViewControllers:@[mainNav, myNav]];
+        self.window.rootViewController = tabbarController;
+    } else {
         //跳转到登录界面
         ViewController * loginController = [[ViewController alloc]init];
         loginController.view.backgroundColor = [UIColor whiteColor];
         self.window.rootViewController = loginController;
     }
-    
-   
-    
-    
-    
     [self.window makeKeyAndVisible];
     return YES;
+}
 
+- (UINavigationController *)navWithRootVC:(UIViewController *)rootVC {
+    if (!rootVC) {
+        return nil;
+    }
+    return [[UINavigationController alloc] initWithRootViewController:rootVC];
 }
 
 

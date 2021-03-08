@@ -18,7 +18,14 @@
 @end
 
 @implementation RegisterViewController
-
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    self.tabBarController.tabBar.hidden = NO;
+    
+}
+-(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
 - (void)viewDidLoad {
     //修改系统自带的返回键为中文d返回
     UIButton *backbutton = [[UIButton alloc ]init];
@@ -212,6 +219,7 @@
                  }];
                  [alertController addAction:action];
                  [self presentViewController:alertController animated:YES completion:nil];
+                 
                  loginText.text = nil;
                  passwdText.text = nil;
                  rePasswdText.text = nil;

@@ -1,20 +1,15 @@
 //
-//  CleanAnswerViewController.m
+//  MyAnswerDetailViewController.m
 //  zhihu
 //
-//  Created by bytedance on 2021/1/3.
+//  Created by bytedance on 2021/2/1.
 //  Copyright © 2021 bytedance. All rights reserved.
 //
 
-/*
- 只展示回答的页面
- */
-#import "ClearAnswerViewController.h"
-#import "ModifyAnswerViewController.h"
-@interface ClearAnswerViewController ()
-@property(nonatomic,strong,readwrite) UITextView *textview;
-@property(nonatomic,strong,readwrite) UILabel *titleLabel;
+#import "MyAnswerDetailViewController.h"
 
+@interface MyAnswerDetailViewController ()
+@property(nonatomic,strong,readwrite) UITextView *textview;
 @property(nonatomic,strong,readwrite) UIButton *goodButton;
 @property(nonatomic,strong,readwrite) UIButton *badButton;
 @property(nonatomic,strong,readwrite) UILabel *countLabel;//显示点赞数
@@ -24,53 +19,32 @@
 @property(nonatomic,readwrite) NSInteger tag;//标记是否对回答点赞，1为点赞过，0为没点赞
 @end
 
-@implementation ClearAnswerViewController
+@implementation MyAnswerDetailViewController
+
 - (void)viewWillDisappear:(BOOL)animated{
     
     self.tabBarController.tabBar.hidden = NO;
     
 }
+
 -(void)viewWillAppear:(BOOL)animated{
-     self.tabBarController.tabBar.hidden = YES;
+        self.tabBarController.tabBar.hidden = YES;
     //返回该页面时刷新文本框回答
     if (self.textview.text.length!=0) {
         [self freshContent];
     }
-
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
     //设置问题标题
     self.view.backgroundColor = [UIColor whiteColor];
-   _titleLabel  = [[UILabel alloc]init];
-    _titleLabel.frame = CGRectMake(self.view.bounds.size.width/4, 90, self.view.bounds.size.width/2, 60);
-    
-    [_titleLabel setTextColor:[UIColor blackColor]];
+    UILabel *titleLabel  = [[UILabel alloc]init];
+    titleLabel.frame = CGRectMake(self.view.bounds.size.width/4, 90, self.view.bounds.size.width/2, 60);
+    titleLabel.text = self.questionTitle;
+    [titleLabel setTextColor:[UIColor blackColor]];
     //titleLabel.backgroundColor = [UIColor redColor];
-    [self.view addSubview:_titleLabel];
-    
-    //设置横线
-    UIView *lineview = [[UIView alloc] initWithFrame:CGRectMake(0, 150, self.view.bounds.size.width, 0.5f)];
-    [lineview setBackgroundColor:[UIColor grayColor]];
-    [self.view addSubview:lineview];
-    
-    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc]initWithTitle:@"返回"style:UIBarButtonItemStyleDone target:self action:@selector(pressBack)];
-    self.navigationItem.leftBarButtonItem = backBtn;
-    
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 200, self.view.bounds.size.width, self.view.bounds.size.height-280)];
-    scrollView.backgroundColor = [UIColor redColor];
-    scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height-280); ;
-    
-    //scrollView.delegate = self;
-    //给textview加入到scrollview中
-    _textview = [[UITextView alloc ]initWithFrame:scrollView.bounds];
-    _textview.backgroundColor = [UIColor whiteColor];
-    //加入回答
-    _textview.text = self.answerContent;
-    [_textview setEditable:NO];
-    [scrollView addSubview:_textview];
-    [self.view addSubview:scrollView];
+    [self.view addSubview:titleLabel];
     
     // 点赞总数
     self.countLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, self.view.bounds.size.height-60, 60, 30)];
@@ -89,58 +63,51 @@
     
     [_badButton addTarget:self action:@selector(diancai) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:_badButton];
+    //设置右上角确认修改
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"确认修改" style:UIBarButtonItemStylePlain target:self action:@selector(modify)];
+    //设置横线
+    UIView *lineview = [[UIView alloc] initWithFrame:CGRectMake(0, 150, self.view.bounds.size.width, 0.5f)];
+    [lineview setBackgroundColor:[UIColor grayColor]];
+    [self.view addSubview:lineview];
     
-    //得到该回答的用户昵称与登录用户的昵称进行对比，若相同则在底部展示修改回答和删除回答按钮
-    NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
-    NSString *username  = (NSString*) [userdefault objectForKey:@"username"];
-    if ([self.nickname isEqualToString:username]) {
-        //修改回答按钮
-        UIButton *modifybutton = [[UIButton alloc ]init];
-        modifybutton.frame = CGRectMake(self.view.bounds.size.width/2+20,self.view.bounds.size.height-60 , 40, 30);
-        // modifybutton.backgroundColor = [UIColor redColor];
-        [modifybutton setTitle:@"修改" forState:UIControlStateNormal];
-        [modifybutton setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
-        //添加点击修改按钮事件
-        [modifybutton addTarget:self action:@selector(modifyAnswer) forControlEvents:UIControlEventTouchUpInside];
-        //删除回答按钮
-        UIButton *delbutton = [[UIButton alloc ]init];
-        delbutton.frame = CGRectMake(self.view.bounds.size.width/2+80,self.view.bounds.size.height-60 , 40, 30);
-        //delbutton.backgroundColor = [UIColor redColor];
-        [delbutton setTitle:@"删除" forState:UIControlStateNormal];
-        [delbutton setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
-        //添加点击删除按钮事件
-        [delbutton addTarget:self action:@selector(deleteAnswer) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:delbutton];
-        [self.view addSubview:modifybutton];
-    }
+    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc]initWithTitle:@"返回"style:UIBarButtonItemStyleDone target:self action:@selector(pressBack)];
+    self.navigationItem.leftBarButtonItem = backBtn;
+    
+    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 200, self.view.bounds.size.width, self.view.bounds.size.height-280)];
+    scrollView.backgroundColor = [UIColor redColor];
+    scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height-280); ;
+    
+    //scrollView.delegate = self;
+    //给textview加入到scrollview中
+    _textview = [[UITextView alloc ]initWithFrame:scrollView.bounds];
+    _textview.backgroundColor = [UIColor whiteColor];
+    //加入回答
+    //_textview.text = self.answerContent;
+    
+    [scrollView addSubview:_textview];
+    
+    
+    [self.view addSubview:scrollView];
+    
+   
+    
     //评论按钮
-    UIButton *commentbutton = [[UIButton alloc ]init];
-    commentbutton.frame = CGRectMake(self.view.bounds.size.width/2+140,self.view.bounds.size.height-60 , 40, 30);
+    UIButton *deleteButton = [[UIButton alloc ]init];
+    deleteButton.frame = CGRectMake(self.view.bounds.size.width/2+140,self.view.bounds.size.height-60 , 40, 30);
     //commentbutton.backgroundColor = [UIColor redColor];
-    [commentbutton setTitle:@"评论" forState:UIControlStateNormal];
-    [commentbutton setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
-    
-    [self.view addSubview:commentbutton];
+    [deleteButton setTitle:@"删除" forState:UIControlStateNormal];
+    [deleteButton setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
+    [deleteButton addTarget:self action:@selector(deleteAnswer) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:deleteButton];
     //设置横线
     UIView *lineview3 = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-80, self.view.bounds.size.width, 0.5f)];
     [lineview3 setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:lineview3];
     
-    //获取问题的标题信息
-    [self getTitle];
+    [self freshContent];
     [self getcontent];
 }
 
-
-//修改回答按钮的点击事件
--(void)modifyAnswer{
-    ModifyAnswerViewController *modifyvc = [[ModifyAnswerViewController alloc]init];
-    modifyvc.content = self.textview.text;
-   modifyvc.questionID = self.questionID;
-   modifyvc.answerID = self.answerID;
-    [self.navigationController pushViewController:modifyvc animated:YES];
-    
-}
 
 //返回上一级页面
 -(void)pressBack{
@@ -150,7 +117,7 @@
 -(void)freshContent{
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *token =  [userDefault objectForKey:@"token"];
-    //NSLog(token);
+   // NSLog(token);
     //请求数据获取回答
     NSString *urlString = [ NSString stringWithFormat:@"http://47.102.194.254/api/v1/questions/%@/answers/%@",self.questionID,self.answerID];
    // NSLog(urlString);
@@ -166,9 +133,6 @@
         NSError *jsonError;
         id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
 #warning 类型的检查
-        if ([jsonObj isKindOfClass:[NSNull class]]) {
-            return ;
-        }
         NSDictionary *dict =[((NSDictionary *)[((NSDictionary *)jsonObj) objectForKey:@"data"]) objectForKey:@"answer"];
         //        NSString *count= [((NSDictionary *)[((NSDictionary *)jsonObj) objectForKey:@"data"]) objectForKey:@"count"];
         // NSString *sum =  [NSString stringWithFormat: @"%d", count];
@@ -189,15 +153,14 @@
 -(void)deleteAnswer{
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"确认删除回答" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *backaction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         NSString *token =  [userDefault objectForKey:@"token"];
-       // NSLog(token);
+        NSLog(token);
         //删除回答
         // /api/v1/questions/{qid}/answers/{aid}
         NSString *urlString = [ NSString stringWithFormat:@"http://47.102.194.254/api/v1/questions/%@/answers/%@",self.questionID,self.answerID];
-      //  NSLog(urlString);
+        NSLog(urlString);
         NSURL *listURL = [NSURL URLWithString:urlString];
         
         NSMutableURLRequest *request =  [NSMutableURLRequest requestWithURL:listURL];
@@ -213,7 +176,7 @@
 #warning 类型的检查
             
             NSString *msg =((NSDictionary *)jsonObj)[@"msg"];
-           // NSLog(msg);
+            NSLog(msg);
             
         }];
         [dataTask resume];
@@ -223,48 +186,79 @@
     }];
     //弹出确认删除提醒框
     [alertController addAction:action];
-    [alertController addAction:backaction];
     [self presentViewController:alertController animated:YES completion:nil];
     
     
 }
--(void)getTitle{
-    //请求最新数据
+-(void)modify{
+    NSLog(@"确认");
+    
+    NSString *contentText =  [self.textview.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if (contentText.length==0) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"回答不能为空" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [alertController addAction:action];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
     NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
     NSString *token = [userdefault objectForKey:@"token"];
-   // /api/v1/questions/{qid}
-    NSString *urlString = [ NSString stringWithFormat:@"http://47.102.194.254/api/v1/questions/%@",self.questionID];
-   //NSLog(urlString);
+    //token string header  是用户令牌   title string POST请求体是标题  content string POST请求体是详细描述
+    //1.确定请求路径
+ //  /api/v1/questions/{qid}/answers/{aid}
+    NSString *urlString = [ NSString stringWithFormat:@"http://47.102.194.254/api/v1/questions/%@/answers/%@",self.questionID,self.answerID];
+    //NSLog(urlString);
     NSURL *listURL = [NSURL URLWithString:urlString];
     //3.创建可变的请求对象
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:listURL];
     //4.修改请求方法为PUT
-    request.HTTPMethod = @"GET";
+    request.HTTPMethod = @"PUT";
     //设置请求头token
     [request setValue:token forHTTPHeaderField:@"token"];
     
     [request setValue:@"application/json" forHTTPHeaderField:@"content-Type"];
-    //NSURLRequest *listRequest =  [NSURLRequest requestWithURL:listURL];
     
+    NSDictionary *parData = [[NSDictionary alloc] initWithObjectsAndKeys: self.textview.text, @"content",nil];
+    NSError *error;
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:parData options:0 error:&error];
+    [request setHTTPBody:postData];
+    //NSLog(strBody);
+    //  NSLog(token);
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSError *jsonError;
-        id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
         
-       NSDictionary  *question =[((NSDictionary *)[((NSDictionary *)jsonObj) objectForKey:@"data"]) objectForKey:@"question"];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-           
-            self.titleLabel.text = question[@"title"];
+        //8.解析数据
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSString *code = dict[@"code"];
+        //NSLog(@"代码是%@",code);
+        int code1 = [code intValue];
+        if(code1 ==0){
+            //发布回答成功
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"修改回答成功" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
+                }];
+                //                if (_block) {
+                //                    _block(@"123");
+                //                }
+                //弹出修改回答成功
+                [alertController addAction:action];
+                [self presentViewController:alertController animated:YES completion:nil];
+                
+            });
             
             
-            // [self.button1 setTitle:answercount forState:UIControlStateNormal];
-            
-        });
-        
+        }
         
     }];
     [dataTask resume];
+    
 }
 //点赞按钮点击
 -(void)dianzan{
@@ -413,9 +407,9 @@
     [request setHTTPBody:postData];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-      
+        
     }];
     [dataTask resume];
 }
-
 @end
+

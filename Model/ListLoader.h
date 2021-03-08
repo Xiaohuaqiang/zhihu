@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @ class QuestionListIterm;
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^GTListLoaderFinishBlock)(BOOL success,NSArray<QuestionListIterm *> *dataArray);
+typedef void(^GTListLoaderFinishBlock)(BOOL success,NSMutableArray<QuestionListIterm *> *dataArray);
 
 
 

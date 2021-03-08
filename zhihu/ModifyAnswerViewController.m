@@ -14,9 +14,19 @@
 @end
 
 @implementation ModifyAnswerViewController
-
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    self.tabBarController.tabBar.hidden = NO;
+    
+}
+-(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc]initWithTitle:@"返回"style:UIBarButtonItemStyleDone target:self action:@selector(pressBack)];
+    self.navigationItem.leftBarButtonItem = backBtn;
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     _textView = [[UITextView alloc]init];
@@ -24,6 +34,12 @@
     _textView.backgroundColor = [UIColor whiteColor];
     _textView.text = _content;
     [self.view addSubview:_textView];
+    
+    
+    //设置横线
+    UIView *lineview3 = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-80, self.view.bounds.size.width, 0.5f)];
+    [lineview3 setBackgroundColor:[UIColor grayColor]];
+    [self.view addSubview:lineview3];
     //右侧完成修改按钮
     UIBarButtonItem *rightbutton = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(modifyAnswer)];
     self.navigationItem.rightBarButtonItem = rightbutton;
@@ -108,5 +124,7 @@
     [dataTask resume];
     
 }
-
+-(void)pressBack{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

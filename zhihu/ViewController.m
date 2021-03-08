@@ -1,5 +1,5 @@
 //
-//  ViewController.m
+//  ViewController.m   登录界面
 //  zhihu
 //
 //  Created by bytedance on 2020/12/9.
@@ -15,13 +15,13 @@
 #import "AppDelegate.h"
 #define SCREEN_SIZE [UIScreen mainScreen].bounds.size
 @interface ViewController ()
-{
-    UITextField *loginText;
-    UITextField *passwdText;
-    NSNumber *code;
+
+@property(nonatomic,strong,readwrite)    UITextField *loginText;
+ @property(nonatomic,strong,readwrite)    UITextField *passwdText;
+  @property(nonatomic,strong,readwrite)   NSNumber *code;
     
     
-}
+
     
 
 
@@ -33,28 +33,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    loginText = [[UITextField alloc] initWithFrame:CGRectMake(20, SCREEN_SIZE.height/4, SCREEN_SIZE.width-40, 60)];
-    loginText.borderStyle = UITextBorderStyleRoundedRect;
-    loginText.placeholder = @"请输入用户名";
+    _loginText = [[UITextField alloc] initWithFrame:CGRectMake(20, SCREEN_SIZE.height/4, SCREEN_SIZE.width-40, 60)];
+    _loginText.borderStyle = UITextBorderStyleRoundedRect;
+    _loginText.placeholder = @"请输入用户名";
     
     UIImageView *loginImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     loginImage.image = [UIImage imageNamed:@"图片/personalicon_tab.png"];
     
-    loginText.leftView = loginImage;
-    loginText.leftViewMode = UITextFieldViewModeAlways;
-    [self.view addSubview:loginText];
+    _loginText.leftView = loginImage;
+    _loginText.leftViewMode = UITextFieldViewModeAlways;
+    [self.view addSubview:_loginText];
     
     
-    passwdText = [[UITextField alloc]initWithFrame:CGRectMake(20, SCREEN_SIZE.height/4+50, SCREEN_SIZE.width-40, 60)];
-    passwdText.borderStyle = UITextBorderStyleRoundedRect;
-    passwdText.placeholder = @"请输入密码";
-    passwdText.secureTextEntry = YES;
+    _passwdText = [[UITextField alloc]initWithFrame:CGRectMake(20, SCREEN_SIZE.height/4+50, SCREEN_SIZE.width-40, 60)];
+    _passwdText.borderStyle = UITextBorderStyleRoundedRect;
+    _passwdText.placeholder = @"请输入密码";
+    _passwdText.secureTextEntry = YES;
     
     UIImageView *passImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     passImage.image = [UIImage imageNamed:@"图片/personalicon_tab.png"];
-    passwdText.leftView = passImage;
-    passwdText.leftViewMode = UITextFieldViewModeAlways;
-    [self.view addSubview:passwdText];
+    _passwdText.leftView = passImage;
+    _passwdText.leftViewMode = UITextFieldViewModeAlways;
+    [self.view addSubview:_passwdText];
     
     //创建登录
     UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -79,7 +79,7 @@
 
 //登录前，先做校验
 -(void)login{
-    if(loginText.text.length==0){
+    if(_loginText.text.length==0){
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"登录名不能为空" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
@@ -89,7 +89,7 @@
         return;
     }
     
-    if(passwdText.text.length==0){
+    if(_passwdText.text.length==0){
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"密码不能为空" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
@@ -98,7 +98,7 @@
         [self presentViewController:alertController animated:YES completion:nil];
         return;
     }
-    if (loginText.text.length<3) {
+    if (_loginText.text.length<3) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"登录名长度必须大于3" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
@@ -108,7 +108,7 @@
         return;
     }
     
-    if (passwdText.text.length<6) {
+    if (_passwdText.text.length<6) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"密码长度必须大于等于6" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
@@ -137,8 +137,8 @@
 }
 //点击空白处回收键盘
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [loginText resignFirstResponder];
-    [passwdText resignFirstResponder];
+    [_loginText resignFirstResponder];
+    [_passwdText resignFirstResponder];
 }
 
 //注册
@@ -146,6 +146,7 @@
     
     RegisterViewController *registe = [[RegisterViewController alloc]init];
     
+   
     [self presentViewController:registe animated:YES completion:nil];
 }
 -(void)setPost{
@@ -166,19 +167,19 @@
     [request setValue:@"ios 10.1" forHTTPHeaderField:@"User-Agent"];
     
     //4.设置请求体信息,字符串--->NSData
-    NSString *strBody=  [ NSString stringWithFormat:@"username=%@&password=%@&type=json",loginText.text,passwdText.text];
+    NSString *strBody=  [ NSString stringWithFormat:@"username=%@&password=%@&type=json",_loginText.text,_passwdText.text];
     
     request.HTTPBody = [strBody dataUsingEncoding:NSUTF8StringEncoding];
-    NSLog(strBody);
+    //NSLog(strBody);
     //5.发送请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
         
         //6.解析数据,NSData --->NSString
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         //NSLog(@"%@",dict);
-        code = dict[@"code"];
+        //code = dict[@"code"];
         //NSLog(@"代码是%@",code);
-        int code1 = [code intValue];
+        int code1 = [self.code intValue];
         
         //用户名不存在
         if(code1==2101){
@@ -208,45 +209,53 @@
             //NSLog(app.token);
             
             //登陆成功，进行持久化存储
-            NSString *userName = loginText.text;
-            NSString *passWord = passwdText.text;
+            NSString *userName = self.loginText.text;
+            NSString *passWord = self.passwdText.text;
+            NSDictionary *dictuser= dictData[@"user"];
+            NSString *avatar = dictuser[@"avatar"];
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setObject:userName forKey:@"username"];
             [userDefaults setObject:passWord forKey:@"password"];
             [userDefaults  setObject:app.token forKey:@"token"];
+             [userDefaults  setObject:avatar forKey:@"avatar"];
             [userDefaults synchronize];
             
           
             
-            UITabBarController *tabbarcontroller = [[UITabBarController alloc]init];
-            MainViewController *mainController = [[MainViewController alloc]init];
-            MyViewController *myController = [[MyViewController alloc]init];
-            MessageViewController *messageController = [[MessageViewController alloc]init];
+            UITabBarController *tabbarController = [[UITabBarController alloc]init];
+            UINavigationController *mainNav = [self navWithRootVC:[MainViewController new]];
+            mainNav.tabBarItem.title = @"首页";
+            UINavigationController *msgNav = [self navWithRootVC:[MessageViewController new]];
+            msgNav.tabBarItem.title = @"消息";
+            UINavigationController *myNav = [self navWithRootVC:[MyViewController new]];
+            myNav.tabBarItem.title = @"我的";
+            [tabbarController setViewControllers:@[mainNav, myNav]];
+            app.window.rootViewController = tabbarController;
             
-            mainController.tabBarItem.title = @"首页";
-            messageController.tabBarItem.title = @"消息";
-            myController.tabBarItem.title = @"我的";
-            
+          
            
             
             
-            [tabbarcontroller setViewControllers:@[mainController,messageController,myController]];
+            //[tabbarcontroller setViewControllers:@[mainController,messageController,myController]];
             //[self.navigationController presentViewController:tabbarcontroller animated:YES completion:nil];
             //tabbarcontroller.title=@"g标题";
 //            UIBarButtonItem *leftbtn = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStyleDone target:self action:@selector(pressLeftbtn)];
 //            tabbarcontroller.navigationItem.leftBarButtonItem = leftbtn;
             
-            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:tabbarcontroller];
-            //设置根控制器
-            app.window.rootViewController = nav;
+//            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:tabbarcontroller];
+//            //设置根控制器
+//            app.window.rootViewController = nav;
 //            [self.navigationController pushViewController:tabbarcontroller animated:YES];
         }
         
     }];
 }
-//-(void)pressLeftbtn{
-//    //[self.navigationController popViewControllerAnimated:YES];
-//}
+- (UINavigationController *)navWithRootVC:(UIViewController *)rootVC {
+    if (!rootVC) {
+        return nil;
+    }
+    return [[UINavigationController alloc] initWithRootViewController:rootVC];
+}
 
 
 

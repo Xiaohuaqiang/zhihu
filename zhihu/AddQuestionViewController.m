@@ -8,10 +8,10 @@
 
 #import "AddQuestionViewController.h"
 #import "AppDelegate.h"
-@interface AddQuestionViewController (){
-   UITextView* textView;
-    UITextView* detailTextView;
-}
+@interface AddQuestionViewController()
+@property(nonatomic,strong,readwrite)   UITextField* textView;
+@property(nonatomic,strong,readwrite)    UITextView* detailTextView;
+
 
 
 @end
@@ -27,48 +27,19 @@
     self.navigationItem.leftBarButtonItem = backIetm;
 
     self.view.backgroundColor = [UIColor whiteColor];
-    //  初始化上述声明的UITextView文本域
-    textView = [[UITextView alloc] initWithFrame:CGRectMake(0,100,self.view.bounds.size.width,100)];
+    self.textView = [[UITextField alloc]initWithFrame:CGRectMake(0,64, self.view.bounds.size.width, 100.f)];
+    [self.textView setPlaceholder:@"请输入标题并以问号结尾"];
+    [self.view addSubview:self.textView];
+    self.textView.textColor = [UIColor blackColor];
     
-    // 设置它的背景颜色
-    textView.backgroundColor = [UIColor whiteColor];
-    // 设置textview里面的字体颜色
-    textView.textColor = [UIColor blackColor];
-    // 设置默认显示的内容
-    textView.text = @"请输入标题";
-    //设置是否允许开启滚动
-    textView.scrollEnabled = YES;
-    //开启是否显示边界
-    textView.showsHorizontalScrollIndicator = YES;
-    //设置超出边界到时候是否有弹簧效果(默认YES)
-    textView.bounces = YES;
-    //键盘类型
-    textView.keyboardType = UIKeyboardTypeDefault;
-    //返回键的类型
-    textView.returnKeyType = UIReturnKeyDefault;
-    //
-     textView.layer.borderWidth =1.0;
-    //  初始化上述声明的UITextView文本域
-    detailTextView = [[UITextView alloc] initWithFrame:CGRectMake(0,250,self.view.bounds.size.width,self.view.bounds.size.height-500)];
+    UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(0, 164, self.view.bounds.size.width-10, 20)];
     
-    // 设置它的背景颜色
-    detailTextView.backgroundColor = [UIColor whiteColor];
-    // 设置textview里面的字体颜色
-    detailTextView.textColor = [UIColor blackColor];
-    // 设置默认显示的内容
-    detailTextView.text = @"请输入问题描述";
-    //设置是否允许开启滚动
-    detailTextView.scrollEnabled = YES;
-    
-    detailTextView.layer.borderWidth =1.0;
-    //开启是否显示边界
-    detailTextView.showsHorizontalScrollIndicator = YES;
-    //设置超出边界到时候是否有弹簧效果(默认YES)
-    detailTextView.bounces = YES;
-    //键盘类型
-      detailTextView.keyboardType = UIKeyboardTypeDefault;
-    //返回键的类型
-    detailTextView.returnKeyType = UIReturnKeyDefault;
+    tip.textColor = [UIColor grayColor];
+    tip.text = @"问题详细描述";
+    [self.view addSubview:tip];
+    self.detailTextView = [[UITextView alloc]initWithFrame:CGRectMake(0, 185, self.view.bounds.size.width, self.view.bounds.size.height-250)];
+    self.detailTextView.textColor = [UIColor blackColor];
+    [self.view addSubview:self.detailTextView];
     
     //设置发布按钮
     
@@ -88,8 +59,8 @@
     
     // 添加到当前view
    
-    [self.view addSubview:textView];
-    [self.view addSubview:detailTextView];
+    [self.view addSubview:self.textView];
+    [self.view addSubview:self.detailTextView];
     
 }
 
@@ -98,9 +69,20 @@
 }
 //当触碰到非文本域的空白处，关闭键盘
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)UIEvent{
-    [textView resignFirstResponder];
+    [self.textView resignFirstResponder];
 }
 -(void)addQuestion{
+     NSString *titleText =  [self.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+   
+    if (titleText.length==0) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"问题不能为空" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [alertController addAction:action];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
     
     //token string header  是用户令牌   title string POST请求体是标题  content string POST请求体是详细描述
     NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
@@ -123,10 +105,10 @@
     [request setValue:token forHTTPHeaderField:@"token"];
     
     //4.设置请求体信息,字符串--->NSData
-    NSString *strBody=  [ NSString stringWithFormat:@"title=%@&content=%@&type=json",textView.text,detailTextView.text];
+    NSString *strBody=  [ NSString stringWithFormat:@"title=%@&content=%@&type=json",self.textView.text,self.detailTextView.text];
     
     request.HTTPBody = [strBody dataUsingEncoding:NSUTF8StringEncoding];
-   NSLog(strBody);
+  // NSLog(strBody);
     //5.发送请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
         
@@ -144,8 +126,8 @@
             }];
             [alertController addAction:action];
             [self presentViewController:alertController animated:YES completion:nil];
-            textView.text = nil;
-           detailTextView.text = nil;
+            self.textView.text = nil;
+           self.detailTextView.text = nil;
           
             return;
         }

@@ -22,21 +22,21 @@
     if (self) {
         
         [self.contentView addSubview:({
-            self.nickNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 15, 50, 50)];
+            self.nickNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 15, 50, 20)];
             //self.nickNameLabel.backgroundColor = [UIColor redColor];
             self.nickNameLabel.font = [UIFont systemFontOfSize:12];
             self.nickNameLabel.textColor = [UIColor grayColor];
             self.nickNameLabel;
         })];
         [self.contentView addSubview:({
-            self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 15, 50, 50)];
+            self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 15, 20, 20)];
            // self.descriptionLabel.backgroundColor = [UIColor redColor];
             self.descriptionLabel.font = [UIFont systemFontOfSize:12];
             self.descriptionLabel.textColor = [UIColor grayColor];
             self.descriptionLabel;
         })];
         [self.contentView addSubview:({
-            self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 70, 350, 50)];
+            self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 45, 350, 75)];
              //self.contentLabel.backgroundColor = [UIColor redColor];
             self.contentLabel.font = [UIFont systemFontOfSize:12];
             self.contentLabel.textColor = [UIColor grayColor];
@@ -45,7 +45,7 @@
             self.contentLabel;
         })];
         [self.contentView addSubview:({
-            self.picitureview = [[UIImageView alloc] initWithFrame:CGRectMake(20, 15, 50, 50)];
+            self.picitureview = [[UIImageView alloc] initWithFrame:CGRectMake(20, 15, 20, 20)];
            // self.picitureview.backgroundColor = [UIColor redColor];
             
             
@@ -73,7 +73,9 @@
     
     
         UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:dict[@"avatar"]]]];
-        self.picitureview.image =image ;
+        CGSize size = CGSizeMake(20, 20);
+        UIImage *newimage = [self newImage:image scaleToSize:size];
+        self.picitureview.image =newimage;
     
    
         self.descriptionLabel.text=dict[@"description"];
@@ -86,5 +88,18 @@
     
 }
 
-
+// 图片缩放(不改变像素)
+-(UIImage *)newImage:(UIImage *)image scaleToSize:(CGSize)size
+{
+    
+    
+    
+    UIGraphicsBeginImageContext(size);
+    
+    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
 @end

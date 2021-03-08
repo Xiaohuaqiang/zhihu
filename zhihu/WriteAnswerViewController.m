@@ -14,9 +14,19 @@
 @end
 
 @implementation WriteAnswerViewController
-
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    self.tabBarController.tabBar.hidden = NO;
+    
+}
+-(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc]initWithTitle:@"返回"style:UIBarButtonItemStyleDone target:self action:@selector(pressBack)];
+    self.navigationItem.leftBarButtonItem = backBtn;
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     UIBarButtonItem *rightbutton = [[UIBarButtonItem alloc]initWithTitle:@"发布回答" style:UIBarButtonItemStyleDone target:self action:@selector(addAnswer)];
@@ -83,5 +93,7 @@
             }];
     [dataTask resume];
 }
-
+-(void)pressBack{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end
